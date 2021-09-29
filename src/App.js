@@ -16,7 +16,7 @@ function App() {
         let response = await (
             await fetch("https://jsonplaceholder.typicode.com/todos/")
         ).json();
-        console.log('res->', response);
+        // console.log('res->', response);
         setTodo(response);
     };
 
