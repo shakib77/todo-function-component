@@ -13,6 +13,11 @@ import {Button} from "@mui/material";
 
 const TodoItems = ({todo}) => {
 
+    const [input, setInput] = useState('');
+    const [items, setItems] = useState(todo);
+    const [toggleSubmit, setToggleSubmit] = useState(true);
+    const [isEdit, setIsEdit] = useState(null);
+
     const columns: GridColDef[] =
         [
             {field: 'col1', headerName: 'Id', width: 150},
@@ -25,9 +30,9 @@ const TodoItems = ({todo}) => {
                         <Button
                             variant="contained"
                             color="primary"
-                            /*onClick={(event) => {
-                                handleClick(event, cellValues);
-                            }}*/
+                            onClick={(event) => {
+                                // handleClick(event, cellValues);
+                            }}
                         >
                             Delete
                         </Button>
@@ -35,6 +40,16 @@ const TodoItems = ({todo}) => {
                 }
             },
         ];
+
+    //delete method
+    const deleteItem = (id) => {
+        const filterItems = todo.map(item => (
+            item.filter((element) => {
+                return element.id !== id
+            })
+        ))
+        setItems(filterItems);
+    };
 
     const rows: GridRowsProp = todo.map((item, i) => (
         {
@@ -45,9 +60,13 @@ const TodoItems = ({todo}) => {
         }
     ))
     return (
-        <div style={{height: 300, width: '100%'}}>
-            <DataGrid rows={rows} columns={columns}/>
-        </div>
+        todo ? (
+            <div style={{height: 300, width: '100%'}}>
+                <DataGrid rows={rows} columns={columns}/>
+            </div>
+        ) : (
+            <div><h1>No List found</h1></div>
+        )
     );
 }
 
