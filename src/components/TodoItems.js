@@ -1,17 +1,14 @@
 import React, {useState} from "react";
 import {DataGrid, GridRowsProp, GridColDef} from '@mui/x-data-grid';
-import {Button} from "@mui/material";
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import {Button, Typography, Box, Modal} from "@mui/material";
 
 const TodoItems = ({todo}) => {
     // console.log('todo->', JSON.stringify(todo));
 
-    // const [input, setInput] = useState('');
+    const [input, setInput] = useState('');
     const [items, setItems] = useState([]);
-    // const [toggleSubmit, setToggleSubmit] = useState(true);
-    // const [isEdit, setIsEdit] = useState(null);
+    const [toggleSubmit, setToggleSubmit] = useState(true);
+    const [isEdit, setIsEdit] = useState(null);
 
     const style = {
         position: 'absolute',
@@ -32,22 +29,8 @@ const TodoItems = ({todo}) => {
     const columns: GridColDef[] =
         [
             {field: 'col1', headerName: 'Id', width: 150},
-            {field: 'col2', headerName: 'Title', width: 150},
+            {field: 'col2', headerName: 'Task', width: 150},
             {field: 'col3', headerName: 'Status', width: 150},
-            {
-                field: "Add",
-                renderCell: (cellValues) => {
-                    return (
-                        <Button
-                            variant="contained"
-                            color="success"
-                            // onClick={() => deleteItem(id)}
-                        >
-                            Add
-                        </Button>
-                    );
-                }
-            },
             {
                 field: "Edit",
                 renderCell: (cellValues) => {
@@ -78,6 +61,18 @@ const TodoItems = ({todo}) => {
                 }
             },
         ];
+
+    //edit method
+    const editItem = (id) => {
+        let ids = id + 1;
+        const updateItem = todo.find((element) => {
+            return element.id === ids;
+        });
+
+        setToggleSubmit(false);
+        setInput(updateItem.text);
+        setIsEdit(id);
+    };
 
     //delete method
     const deleteItem = (id) => {
@@ -110,10 +105,13 @@ const TodoItems = ({todo}) => {
                 >
                     <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
+                            Edit
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            Task:
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            Status:
                         </Typography>
                     </Box>
                 </Modal>

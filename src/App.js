@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import './App.css';
+import { Typography } from '@mui/material';
 import TodoItems from "./components/TodoItems";
-
-// import AddItems from "./components/AddItems"
+import AddItems from "./components/AddItems"
 
 function App() {
 
@@ -22,8 +22,11 @@ function App() {
 
     return (
         <>
-            <h1>Todo list</h1>
+            <div className='App'>
+            <Typography align={"center"} variant={'h3'}>Todo list</Typography>
+            <AddItems/>
             <TodoItems todo={todo}/>
+            </div>
         </>
     );
 }
